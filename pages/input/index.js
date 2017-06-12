@@ -92,6 +92,7 @@ export default () => render({
         getInitialState: () => ({
           options: [{ label: '.com', value: '.com' }, { label: '.cn', value: '.cn' }],
           value: '.cn',
+          hasFormItemWrapper: false,
           style: {
             width: '80px',
           },
@@ -104,6 +105,7 @@ export default () => render({
         getInitialState: () => ({
           options: [{ label: '.com', value: '.com' }, { label: '.cn', value: '.cn' }],
           value: '.com',
+          hasFormItemWrapper: false,
           style: {
             width: '70px',
           },
