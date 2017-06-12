@@ -2,15 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Button } from 'antd'
 import { omit } from '../util'
-import { keep, SIZES } from '../common'
+import { noop, SIZES } from '../common'
 
 const TYPES = ['normal', 'primary', 'dashed', 'ghost']
 const SHAPES = ['default', 'circle']
 
-/*
- props
- */
-export const defaultState = {
+export const getDefaultState = () => ({
   text: undefined,
   size: SIZES[0],
   loading: false,
@@ -18,7 +15,7 @@ export const defaultState = {
   disabled: false,
   icon: '',
   shape: SHAPES[0],
-}
+})
 
 export const stateTypes = {
   text: PropTypes.string,
@@ -30,16 +27,10 @@ export const stateTypes = {
   shape: PropTypes.oneOf(SHAPES),
 }
 
-/*
- reduce functions
- */
 export const defaultListeners = {
-  onClick: keep,
+  onClick: noop,
 }
 
-/*
- render
- */
 export function render({ state, listeners }) {
   const props = omit(state, ['text', 'shape'])
   if (state.shape !== SHAPES[0]) {

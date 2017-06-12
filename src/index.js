@@ -5,6 +5,7 @@ import './propTypes'
 import * as Input from './Input'
 import * as Alert from './Alert'
 import * as AutoComplete from './AutoComplete'
+import * as Breadcrumb from './Breadcrumb'
 // import * as InputNumber from './InputNumber'
 // import * as Table from './Table'
 // import * as Repeat from './Repeat'
@@ -28,7 +29,7 @@ import * as Select from './Select'
 // import * as Col from './Col'
 // import * as Dialog from './Dialog'
 // import * as DialogPreview from './DialogPreview'
-// import * as Breadcrumb from './Breadcrumb'
+
 // import * as TabsStatic from './TabsStatic'
 // import * as Card from './Card'
 // import * as Textarea from './Textarea'
@@ -71,6 +72,7 @@ import * as Block from './Block'
 export default {
   Alert,
   AutoComplete,
+  Breadcrumb,
   Button,
   Block,
   Box,

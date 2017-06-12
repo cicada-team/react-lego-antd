@@ -2,10 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Breadcrumb } from 'antd'
 
-export const defaultState = {
+export const getDefaultState = () => ({
   items: [],
   separator: '/',
-}
+})
 
 export const stateTypes = {
   items: PropTypes.array,
