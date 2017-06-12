@@ -1,0 +1,127 @@
+@flexPrefixCls: am-flexbox;
+
+.align-self(@as) {
+  align-self: @as;
+}
+
+.display-box() {
+  display: flex;
+}
+
+.flex-direction(@direction: row) {
+  flex-direction: @direction;
+}
+
+.flex-wrap(@wrap: nowrap) {
+  flex-wrap: @wrap;
+}
+
+.flex-justify(@justify: flex-start) {
+  justify-content: @justify;
+}
+
+.box-align(@align: center) {
+  align-items: @align;
+}
+
+.box-align-content(@alignContent: stretch) {
+  align-content: @alignContent;
+}
+
+.box-flex(@scale: 1) {
+  flex: @scale;
+}
+
+.box-sizing(@sizing: border-box) {
+  -webkit-box-sizing: @sizing;
+}
+
+.ant-flexbox {
+  text-align: left;
+  overflow-y: hidden;
+  display: flex;
+  .box-align;
+  &-dir-row {
+    .flex-direction(row);
+  }
+  &-dir-row-reverse {
+    .flex-direction(row-reverse);
+  }
+  &-dir-column {
+    .flex-direction(column);
+  }
+  &-dir-column-reverse {
+    .flex-direction(column-reverse);
+  }
+
+  &-nowrap {
+    .flex-wrap(nowrap);
+  }
+  &-wrap {
+    .flex-wrap(wrap);
+  }
+  &-wrap-reverse {
+    .flex-wrap(wrap-reverse);
+  }
+
+  &-justify-start {
+    .flex-justify(flex-start);
+  }
+  &-justify-end {
+    .flex-justify(flex-end);
+  }
+  &-justify-center {
+    .flex-justify(center);
+  }
+  &-justify-between {
+    .flex-justify(space-between);
+  }
+  &-justify-around {
+    .flex-justify(space-around);
+  }
+
+  &-align-top {
+    .box-align(flex-start);
+  }
+  &-align-bottom {
+    .box-align(flex-end);
+  }
+  &-align-middle {
+    .box-align(center);
+  }
+  &-align-stretch {
+    .box-align(stretch);
+  }
+  &-align-baseline {
+    .box-align(baseline);
+  }
+
+  &-align-content-start {
+    .box-align-content(flex-start);
+  }
+  &-align-content-end {
+    .box-align-content(flex-end);
+  }
+  &-align-content-center {
+    .box-align-content(center);
+  }
+  &-align-content-between {
+    .box-align-content(space-between);
+  }
+  &-align-content-around {
+    .box-align-content(space-around);
+  }
+  &-align-content-stretch {
+    .box-align-content(stretch);
+  }
+
+
+  &-item {
+    .box-sizing();
+    .box-flex(1);
+    min-width: 20px;
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+}
