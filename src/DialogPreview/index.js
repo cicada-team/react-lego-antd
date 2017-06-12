@@ -1,4 +1,5 @@
-import React from 'react'  import PropTypes from 'prop-types'
+import React from 'react'
+import PropTypes from 'prop-types'
 import Dialog from './Dialog'
 import { id, compose } from '../util'
 import { Children } from '../lego'
