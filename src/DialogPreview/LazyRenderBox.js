@@ -1,4 +1,5 @@
-import React from 'react'  import PropTypes from 'prop-types'
+import React from 'react'
+import PropTypes from 'prop-types'
 import assign from 'object-assign'
 /* eslint-disable */
 const LazyRenderBox = React.createClass({
