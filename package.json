@@ -60,8 +60,9 @@
     "mode": "npminstall"
   },
   "dependencies": {
-    "@cicada/render": "^1.0.0-alpha2",
+    "@cicada/render": "^1.0.0-alpha3",
     "antd": "^2.11.0",
+    "babel-plugin-module-resolver": "^2.7.1",
     "classnames": "^2.2.5",
     "moment": "^2.15.1",
     "prop-types": "^15.5.10",

@@ -29,9 +29,7 @@ export const keep = ({ state }) => {
 /*
  * null function
  * */
-export const noop = () => {
-  return null
-}
+export const noop = () => {}
 
 /*
  *  constants

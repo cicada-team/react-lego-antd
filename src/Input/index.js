@@ -42,9 +42,9 @@ export const stateTypes = {
  */
 export const defaultListeners = {
   ...zip(COMMON_INPUT_EVENT, new Array(COMMON_INPUT_EVENT.length).fill(noop)),
-  onChange({ state }, e) {
+  onChange(_, e) {
+    console.log(e.target.value)
     return {
-      ...state,
       value: e.target.value,
     }
   },

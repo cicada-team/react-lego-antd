@@ -5,12 +5,6 @@
     "stage-0"
   ],
   "plugins": [
-    ["module-resolver", {
-      "root": ["./"],
-      "alias": {
-        "@cicada/react-lego-antd": "./src"
-      }
-    }],
     ["babel-plugin-transform-builtin-extend", {
       "globals": ["Error"]
     }],
