@@ -1,7 +1,7 @@
 {
-  "name": "@alipay/cicada",
+  "name": "@cicada/react-lego-antd",
   "description": "do not use this package",
-  "version": "0.0.1",
+  "version": "1.0.0-alpha1",
   "scripts": {
     "installAll": "tnpm i && cd ./components && tnpm i && cd ..",
     "start": "next",
