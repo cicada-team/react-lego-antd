@@ -5,16 +5,13 @@ import {
   SIZES,
 } from '../common'
 
-/*
- state
- */
-export const defaultState = {
+export const getDefaultState = () => ({
   disabled: false,
   checked: false,
   size: SIZES[0],
   checkedChildren: undefined,
   unCheckedChildren: undefined,
-}
+})
 
 export const stateTypes = {
   disabled: PropTypes.bool,
@@ -24,21 +21,14 @@ export const stateTypes = {
   unCheckedChildren: PropTypes.string,
 }
 
-/*
- reduce functions
- */
 export const defaultListeners = {
-  onChange({ state }, checked) {
+  onChange(_, checked) {
     return {
-      ...state,
       checked,
     }
   },
 }
 
-/*
- render
- */
 export function render({ state, listeners }) {
   return <Switch {...state} {...listeners} />
 }

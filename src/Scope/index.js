@@ -1,5 +1,5 @@
 import React from 'react'
-import Scope from '@alipay/cicada-render/lib/components/Scope'
+import Scope from '@cicada/render/lib/components/Scope'
 
 export function render({ children }) {
   return (

@@ -13,17 +13,14 @@ const Button = Radio.Button
 const TYPES = ['default', 'button']
 const SIZES = ['default', 'small', 'large']
 
-/*
- state
- */
-export const defaultState = {
+export const getDefaultState = () => ({
   ...createFormItemDefaultState(),
   items: [],
   disabled: false,
   value: undefined,
   size: SIZES[0],
   type: TYPES[0],
-}
+})
 
 export const stateTypes = {
   ...COMMON_FORM_ITEM_STATE_TYPES,
@@ -34,9 +31,6 @@ export const stateTypes = {
   type: PropTypes.oneOf(TYPES),
 }
 
-/*
- reduce functions
- */
 export const defaultListeners = {
   onChange({ state }, e) {
     return {
@@ -46,9 +40,6 @@ export const defaultListeners = {
   },
 }
 
-/*
- render
- */
 export function render({ state, listeners }) {
   const groupDisable = state.disabled
   const Component = state.type === TYPES[1] ? Button : Radio
@@ -62,3 +53,5 @@ export function render({ state, listeners }) {
     </Group>
   )
 }
+
+export const display = 'inline'

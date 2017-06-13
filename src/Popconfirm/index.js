@@ -4,15 +4,13 @@ import { Popconfirm } from 'antd'
 
 export const PLACEMENTS = ['top', 'left', 'right', 'bottom']
 
-/*
- state
- */
-export const defaultState = {
+export const getDefaultState = () => ({
   placement: PLACEMENTS[0],
   title: '',
   okText: '确定',
   cancelText: '取消',
-}
+})
+
 export const stateTypes = {
   placement: PropTypes.oneOf(PLACEMENTS),
   title: PropTypes.string,
@@ -20,30 +18,12 @@ export const stateTypes = {
   cancelText: PropTypes.string,
 }
 
-/*
- reduce functions
- */
 export const defaultListeners = {
-  onConfirm({ state }) {
-    return {
-      ...state,
-    }
-  },
-  onCancel({ state }) {
-    return {
-      ...state,
-    }
-  },
-  onVisibleChange({ state }) {
-    return {
-      ...state,
-    }
-  },
+  onConfirm() {},
+  onCancel() {},
+  onVisibleChange() {},
 }
 
-/*
- render
- */
 export function render({ state, listeners, children }) {
   return (
     <Popconfirm {...state} {...listeners}>

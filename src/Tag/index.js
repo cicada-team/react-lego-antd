@@ -5,14 +5,11 @@ import { omit } from '../util'
 
 const colors = ['', 'blue', 'green', 'yellow', 'red', 'pink', 'orange', 'cyan', 'purple', 'blue-inverse', 'green-inverse', 'yellow-inverse', 'red-inverse', 'pink-inverse', 'orange-inverse', 'cyan-inverse', 'purple-inverse']
 
-/*
- props
- */
-export const defaultState = {
+export const getDefaultState = () => ({
   closable: false,
   color: colors[0],
   text: '',
-}
+})
 
 export const stateTypes = {
   closable: PropTypes.bool,
@@ -20,27 +17,13 @@ export const stateTypes = {
   text: PropTypes.string,
 }
 
-/*
- reduce functions
- */
 export const defaultListeners = {
-  onClose({ state }) {
-    return state
-  },
-  onClick({ state }) {
-    return state
-  },
-  onMouseEnter({ state }) {
-    return state
-  },
-  onMouseLeave({ state }) {
-    return state
-  },
+  onClose() {},
+  onClick() {},
+  onMouseEnter() {},
+  onMouseLeave() {},
 }
 
-/*
- render
- */
 export function render({ state, listeners }) {
   return (
     <Tag {...omit(state, 'text')} {...listeners}>
@@ -48,3 +31,5 @@ export function render({ state, listeners }) {
     </Tag>
   )
 }
+
+export const display = 'inline'

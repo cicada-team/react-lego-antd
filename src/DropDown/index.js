@@ -9,10 +9,8 @@ const THEME = ['light', 'dark']
 const MODE = ['vertical', 'horizontal', 'inline']
 const TYPES = ['a', 'Button']
 const PLACEMENTS = ['bottomLeft', 'bottomCenter', 'bottomRight', 'topLeft', 'topCenter', 'topRight']
-/*
- props
- */
-export const defaultState = {
+
+export const getDefaultState = () => ({
   text: '',
   type: TYPES[0],
   trigger: TRIGGER[0],
@@ -21,7 +19,8 @@ export const defaultState = {
   theme: THEME[0],
   mode: MODE[0],
   placement: PLACEMENTS[0],
-}
+})
+
 export const stateTypes = {
   text: PropTypes.string,
   type: PropTypes.oneOf(TYPES),
@@ -32,17 +31,12 @@ export const stateTypes = {
   mode: PropTypes.oneOf(MODE),
   placement: PropTypes.oneOf(PLACEMENTS),
 }
-/*
- reduce functions
- */
+
 export const defaultListeners = {
-  onVisibleChange({ state }) {
-    return state
-  },
-  onClick({ state }) {
-    return state
-  },
+  onVisibleChange() {},
+  onClick() {},
 }
+
 function renderMenuItem(item, index) {
   const { disabled = false, text = '', key, icon, href, target = '_self' } = item
   const iconNode = icon ? <Icon type={icon} /> : null
@@ -57,18 +51,16 @@ function renderChildren(type, text) {
       {text} <Icon type="down" />
     </Button>)
   } else {
-    /* eslint-disable */
-    Component = (<a className="ant-dropdown-link" href="javascript:void(0)">
+    Component = (
+      <a className="ant-dropdown-link" href="javascript:void(0)">
       {text} <Icon type="down" />
-    </a>)
+      </a>
+    )
   }
 
   return Component
 }
 
-/*
- render
- */
 export function render({ state, listeners }) {
   const menu = (
     <Menu onClick={listeners.onClick} {...omit(state, ['items', 'visible', 'trigger', 'text', 'placement'])}>

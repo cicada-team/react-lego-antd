@@ -1,35 +1,29 @@
+// TODO 未通过
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Tabs } from 'antd'
-import { id } from '../util'
 import { Children } from '../lego'
 import {
-  noop,
   SIZES,
 } from '../common'
 
 const Pane = Tabs.TabPane
 const TYPES = ['card', 'line']
 const POSITIONS = ['top', 'right', 'bottom', 'left']
-/*
- identifier
- */
+
 export const identifiers = {
-  Group: id(noop),
-  Title: id(noop),
-  Content: id(noop),
+  Group: {},
+  Title: {},
+  Content: {},
 }
 
-/*
- state
- */
-export const defaultState = {
+export const getDefaultState = () => ({
   activeKey: undefined,
   disabled: false,
   type: TYPES[0],
   size: SIZES[0],
   position: POSITIONS[0],
-}
+})
 
 export const stateTypes = {
   activeKey: PropTypes.string,
@@ -39,21 +33,14 @@ export const stateTypes = {
   position: PropTypes.oneOf(POSITIONS),
 }
 
-/*
- reduce functions
- */
 export const defaultListeners = {
-  onChange({ state }, activeKey) {
+  onChange(_, activeKey) {
     return {
-      ...state,
       activeKey,
     }
   },
 }
 
-/*
- render
- */
 export function render({ state, listeners, children }) {
   const groups = Children.filter(children, identifiers.Group)
   if (groups.length === 0) return null

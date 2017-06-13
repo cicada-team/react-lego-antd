@@ -2,10 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { TimePicker } from 'antd'
 import moment from 'moment'
-import { pick, id, zip, compose } from '../util'
+import { pick, zip, compose } from '../util'
 import { Children } from '../lego'
 import {
-  noop,
   keep,
   createFormItem,
   SIZES,
@@ -13,10 +12,8 @@ import {
   COMMON_FORM_ITEM_STATE_TYPES,
   createFormItemDefaultState,
 } from '../common'
-/*
- props
- */
-export const defaultState = {
+
+export const getDefaultState = () => ({
   ...createFormItemDefaultState(),
   value: undefined,
   placeholder: '',
@@ -24,7 +21,8 @@ export const defaultState = {
   disabled: false,
   style: {},
   hideDisabledOptions: true,
-}
+})
+
 export const stateTypes = {
   ...COMMON_FORM_ITEM_STATE_TYPES,
   size: PropTypes.oneOf(SIZES),
@@ -34,32 +32,28 @@ export const stateTypes = {
   style: PropTypes.object,
   hideDisabledOptions: PropTypes.bool,
 }
-/*
- reduce functions
- */
+
 export const defaultListeners = {
   ...zip(COMMON_INPUT_EVENT, new Array(COMMON_INPUT_EVENT.length).fill(keep)),
-  onChange({ state }, date, dateString) {
+  onChange(_, __, dateString) {
     return {
-      ...state,
       value: dateString,
     }
   },
 }
-/*
- identifier
- */
+
 export const identifiers = {
-  Prefix: id(noop),
-  Suffix: id(noop),
+  Prefix: {},
+  Suffix: {},
 }
 
-export const interceptors = ['disabledHours', 'disabledMinutes', 'disabledSeconds']
+export const defaultIntercepters = {
+  disabledHours: undefined,
+  disabledMinutes: undefined,
+  disabledSeconds: undefined,
+}
 
-/*
- render
- */
-export function render({ state, listeners, children, interceptors: finalInterceptors }) {
+export function render({ state, listeners, children, intercepters: finalIntercepters }) {
   const prefix = compose(Children.find, Children.hasChildren)(children, identifiers.Prefix) ? (
     Children.findChildren(children, identifiers.Prefix)[0]
   ) : null
@@ -71,6 +65,6 @@ export function render({ state, listeners, children, interceptors: finalIntercep
 
   return createFormItem(
     state,
-    <TimePicker value={value} {...inputProps} addonBefore={prefix} addonAfter={suffix} {...listeners} {...finalInterceptors} />
+    <TimePicker value={value} {...inputProps} addonBefore={prefix} addonAfter={suffix} {...listeners} {...finalIntercepters} />
   )
 }

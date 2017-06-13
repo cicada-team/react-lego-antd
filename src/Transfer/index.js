@@ -2,13 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Transfer } from 'antd'
 import {
-  keep,
+  noop,
 } from '../common'
 
-/*
- props
- */
-export const defaultState = {
+export const getDefaultState = () => ({
   dataSource: [],
   titles: [],
   targetKeys: [],
@@ -17,7 +14,7 @@ export const defaultState = {
   showSearch: false,
   searchPlaceholder: '请输入搜索内容',
   notFoundContent: '列表为空',
-}
+})
 
 export const stateTypes = {
   dataSource: PropTypes.array,
@@ -30,34 +27,26 @@ export const stateTypes = {
   notFoundContent: PropTypes.string,
 }
 
-/*
- reduce functions
- */
 export const defaultListeners = {
-  onSelectChange({ state }, sourceSelectedKeys, targetSelectedKeys) {
+  onSelectChange(_, sourceSelectedKeys, targetSelectedKeys) {
     return {
-      ...state,
       selectedKeys: [...sourceSelectedKeys, ...targetSelectedKeys],
     }
   },
-  onChange({ state }, nextTargetKeys) {
+  onChange(_, nextTargetKeys) {
     return {
-      ...state,
       targetKeys: nextTargetKeys,
     }
   },
-  onSearchChange: keep,
+  onSearchChange: noop,
 }
 
-export const interceptors = ['filterOption']
+export const defaultInterceptors = { filterOption: undefined }
 
-/*
- render
- */
-export function render({ state, listeners, interceptors: finalInterceptors }) {
+export function render({ state, listeners, intercepters: finalIntercepters }) {
   return (<Transfer
     render={item => item.title}
-    {...finalInterceptors}
+    {...finalIntercepters}
     {...state}
     {...listeners}
   />)

@@ -2,7 +2,7 @@ const path = require('path')
 const configSvg = require('./svg.config')
 
 module.exports = {
-  // webpack: (config, { dev }) => {
+  webpack: (config, { dev }) => {
     // config.resolve.alias = {
       // '@cicada/react-lego-antd': path.join(process.cwd(), 'components', 'src'),
     // }
@@ -12,7 +12,7 @@ module.exports = {
     //   ReactDom: true,
     // }]
 
-    // configSvg(config)
-    // return config
-  // }
+    configSvg(config)
+    return config
+  }
 }

@@ -1,9 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { id, repeat, compose } from '../util'
-import { noop } from '../common'
+import { repeat, compose } from '../util'
 import { Children } from '../lego'
-import Scope from '@alipay/cicada-render/lib/components/Scope'
+import Scope from '@cicada/render/lib/components/Scope'
 
 export const stateTypes = {
   data: PropTypes.array,
@@ -12,26 +11,17 @@ export const stateTypes = {
   columns: PropTypes.number,
 }
 
-/*
- props
- */
-export const defaultState = {
+export const getDefaultState = () => ({
   data: [],
   labelWidth: undefined,
   dataMaxWidth: undefined,
   columns: 1,
-}
+})
 
-/*
-  identifiers
- */
 export const identifiers = {
-  Grid: id(noop),
+  Grid: {},
 }
 
-/*
- render
- */
 export function render({ state, children }) {
   const { data, columns } = state
   const rows = Math.ceil(data.length / columns)

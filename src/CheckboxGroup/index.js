@@ -7,10 +7,7 @@ import {
 
 const CheckboxGroup = Checkbox.Group
 
-/*
- state
- */
-export const defaultState = {
+export const getDefaultState = () => ({
   items: [],
   disabled: false,
   value: [],
@@ -21,7 +18,7 @@ export const defaultState = {
   wrapperCol: { span: 18 },
   hasFeedback: true,
   hasFormItemWrapper: true,
-}
+})
 
 export const stateTypes = {
   items: PropTypes.array,
@@ -36,21 +33,14 @@ export const stateTypes = {
   hasFormItemWrapper: PropTypes.bool,
 }
 
-/*
- reduce functions
- */
 export const defaultListeners = {
-  onChange({ state }, value) {
+  onChange(_, value) {
     return {
-      ...state,
       value,
     }
   },
 }
 
-/*
- render
- */
 export function render({ state, listeners }) {
   return createFormItem(
     state,

@@ -1,11 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Tabs } from 'antd'
-import Scope from '@alipay/cicada-render/lib/components/Scope'
-import { id } from '../util'
+import Scope from '@cicada/render/lib/components/Scope'
 import { Children } from '../lego'
 import {
-  keep,
   noop,
   SIZES,
 } from '../common'
@@ -13,18 +11,13 @@ import {
 const Pane = Tabs.TabPane
 const TYPES = ['line', 'card']
 const POSITIONS = ['top', 'right', 'bottom', 'left']
-/*
- identifier
- */
+
 export const identifiers = {
-  Title: id(noop),
-  Content: id(noop),
+  Title: {},
+  Content: {},
 }
 
-/*
- state
- */
-export const defaultState = {
+export const getDefaultState = () => ({
   activeKey: undefined,
   disabled: false,
   type: TYPES[0],
@@ -34,7 +27,7 @@ export const defaultState = {
   position: POSITIONS[0],
   hideAdd: true,
   animated: true,
-}
+})
 
 export const stateTypes = {
   activeKey: PropTypes.string,
@@ -52,24 +45,17 @@ function ensureArray(obj) {
   return Array.isArray(obj) ? obj : [obj]
 }
 
-/*
- reduce functions
- */
 export const defaultListeners = {
-  onDelete: keep,
-  onAdd: keep,
-  onTabClick: keep,
+  onDelete: noop,
+  onAdd: noop,
+  onTabClick: noop,
   onChange({ state }, activeKey) {
     return {
-      ...state,
       activeKey,
     }
   },
 }
 
-/*
- render
- */
 export function render({ state, listeners, children }) {
   const onEdit = (key, type) => {
     if (type === 'add') {

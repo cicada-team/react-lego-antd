@@ -1,10 +1,7 @@
-/*
- * import public module
- * */
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import { pick, id } from '../util'
+import { pick } from '../util'
 import { Children } from '../lego'
 import {
   preventDefault,
@@ -15,18 +12,11 @@ import {
   COMMON_INPUT_STATE,
   COMMON_INPUT_EVENT } from '../common'
 
-/*
- * import private module
- * */
-export { default as defaultListeners } from './listeners'
-
+export defaultListeners from './listeners'
 
 const prefixCls = 'ant-input-number'
 
-/*
- props
- */
-export const defaultState = {
+export const getDefaultState = () => ({
   value: undefined,
   placeholder: '',
   size: SIZES[0],
@@ -42,7 +32,7 @@ export const defaultState = {
   wrapperCol: { span: 18 },
   hasFeedback: true,
   hasFormItemWrapper: true,
-}
+})
 
 export const stateTypes = {
   value: PropTypes.number,
@@ -66,8 +56,8 @@ export const stateTypes = {
  identifier
  */
 export const identifiers = {
-  Prefix: id(noop),
-  Suffix: id(noop),
+  Prefix: {},
+  Suffix: {},
 }
 
 const renderInputNumber = (state, listeners) => {

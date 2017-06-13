@@ -5,10 +5,8 @@ import { pick } from '../util'
 
 const LIST_TYPES = ['line', 'circle', 'dashboard']
 const LIST_STATUS = ['default', 'success', 'active', 'exception']
-/*
- props
- */
-export const defaultState = {
+
+export const getDefaultState = () => ({
   type: LIST_TYPES[0],
   percent: 0,
   format: undefined,
@@ -16,7 +14,7 @@ export const defaultState = {
   width: 132,
   strokeWidth: null,
   showInfo: true,
-}
+})
 
 export const stateTypes = {
   type: PropTypes.oneOf(LIST_TYPES),
@@ -28,9 +26,6 @@ export const stateTypes = {
   showInfo: PropTypes.bool,
 }
 
-/*
- render
- */
 export function render({ state }) {
   const props = pick(state, ['type', 'percent', 'format', 'status', 'width', 'strokeWidth', 'showInfo'])
   if (props.status === LIST_STATUS[0]) {

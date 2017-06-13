@@ -1,16 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-/*
- state
- */
-export const defaultState = {
+export const getDefaultState = () => ({
   alt: '',
   src: '',
   width: '',
   height: '',
   style: {},
-}
+})
+
 export const stateTypes = {
   alt: PropTypes.string,
   src: PropTypes.string,
@@ -18,11 +16,11 @@ export const stateTypes = {
   height: PropTypes.string,
   style: PropTypes.object,
 }
-/*
- render
- */
+
 export function render({ state }) {
   return (
     <img {...state} role="presentation" />
   )
 }
+
+export const display = 'inline'

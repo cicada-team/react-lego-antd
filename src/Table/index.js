@@ -1,16 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { keep, noop } from '../common'
-import { id, pick, omit, filter } from '../util'
+import { pick, omit, filter } from '../util'
 import { Children } from '../lego'
 import { Table } from 'antd'
-import Scope from '@alipay/cicada-render/lib/components/Scope'
+import Scope from '@cicada/render/lib/components/Scope'
 
 const { Column, ColumnGroup } = Table
 
 const SIZES = ['default', 'small']
 
-export const defaultState = {
+export const getDefaultState = () => ({
   dataSource: [],
   pagination: undefined,
   rowSelection: undefined,
@@ -23,7 +23,7 @@ export const defaultState = {
   bordered: false,
   showHeader: true,
   scroll: {},
-}
+})
 
 export const stateTypes = {
   dataSource: PropTypes.array,
@@ -43,25 +43,22 @@ export const stateTypes = {
 export const defaultListeners = {
   onChange({ state }, pagination) {
     return {
-      ...state,
       pagination: {
         ...state.pagination,
         ...pagination,
       },
     }
   },
-  onExpandedRowsChange({ state }, expandedRowKeys) {
+  onExpandedRowsChange(_, expandedRowKeys) {
     return {
-      ...state,
       expandedRowKeys,
     }
   },
   onExpand: keep,
   onRowClick: keep,
   onCellClick: keep,
-  onPageChange({ state }, current, pageSize) {
+  onPageChange(state, current, pageSize) {
     return {
-      ...state,
       pagination: {
         ...state.pagination,
         current,
@@ -71,7 +68,6 @@ export const defaultListeners = {
   },
   onShowSizeChange({ state }, current, pageSize) {
     return {
-      ...state,
       pagination: {
         ...state.pagination,
         current,
@@ -81,76 +77,77 @@ export const defaultListeners = {
   },
   onSelectChange({ state }, selectedRowKeys) {
     return {
-      ...state,
       rowSelection: {
         ...state.rowSelection,
         selectedRowKeys,
       },
     }
   },
-  onSelect: keep,
-  onSelectAll: keep,
-  onSelectInvert: keep,
-}
-
-export const identifiers = {
-  Column: id(noop),
-  ColumnGroup: id(noop),
-  Title: id(noop),
-  Footer: id(noop),
-  ExpandedRow: id(noop),
+  onSelect: noop,
+  onSelectAll: noop,
+  onSelectInvert: noop,
 }
 
 const FIXEDS = [false, 'left', 'right']
 
-identifiers.Column.defaultState = {
-  title: '',
-  dataIndex: '',
-  filters: [],
-  filterMultiple: true,
-  filtered: false,
-  sorter: false,
-  colSpan: undefined,
-  width: '',
-  className: '',
-  fixed: FIXEDS[0],
+export const identifiers = {
+  Column: {
+    getDefaultState: () => ({
+      title: '',
+      dataIndex: '',
+      filters: [],
+      filterMultiple: true,
+      filtered: false,
+      sorter: false,
+      colSpan: undefined,
+      width: '',
+      className: '',
+      fixed: FIXEDS[0],
+    }),
+    stateTypes: {
+      title: PropTypes.string,
+      dataIndex: PropTypes.string,
+      filters: PropTypes.array,
+      filterMultiple: PropTypes.bool,
+      filtered: PropTypes.bool,
+      sorter: PropTypes.bool,
+      colSpan: PropTypes.number,
+      width: PropTypes.string,
+      className: PropTypes.string,
+      fixed: PropTypes.oneOf(FIXEDS),
+    },
+  },
+  ColumnGroup: {
+    getDefaultState: () => ({
+      title: '',
+    }),
+    stateTypes: {
+      title: PropTypes.string,
+    },
+  },
+  Title: {},
+  Footer: {},
+  ExpandedRow: {},
 }
 
-identifiers.Column.stateTypes = {
-  title: PropTypes.string,
-  dataIndex: PropTypes.string,
-  filters: PropTypes.array,
-  filterMultiple: PropTypes.bool,
-  filtered: PropTypes.bool,
-  sorter: PropTypes.bool,
-  colSpan: PropTypes.number,
-  width: PropTypes.string,
-  className: PropTypes.string,
-  fixed: PropTypes.oneOf(FIXEDS),
+export const defaultIntercepters = {
+  onSorter: undefined,
+  onFilter: undefined,
+  onCeil: undefined,
 }
-
-identifiers.ColumnGroup.defaultState = {
-  title: '',
-}
-
-identifiers.ColumnGroup.stateTypes = {
-  title: PropTypes.string,
-}
-
-export const interceptors = ['onSorter', 'onFilter', 'onCeil']
 
 /* eslint-disable no-shadow */
 /* eslint-disable no-mixed-operators */
-const renderColumn = ({ props }, key, pagination, listeners, interceptors) => {
+const renderColumn = ({ props }, key, pagination, listeners, intercepters) => {
   const { children, dataIndex } = props
-  const { onCeil = () => ({}) } = interceptors
+  const { onCeil = () => ({}) } = intercepters
   const { current = 1, pageSize = 10 } = pagination || {}
-  let { onSorter, onFilter } = interceptors
+  let { onSorter, onFilter } = intercepters
   if (onSorter) {
-    onSorter = (...argv) => interceptors.onSorter(dataIndex, ...argv)
+    onSorter = (...argv) => intercepters.onSorter(dataIndex, ...argv)
   }
   if (onFilter) {
-    onFilter = (...argv) => interceptors.onFilter(dataIndex, ...argv)
+    onFilter = (...argv) => intercepters.onFilter(dataIndex, ...argv)
   }
 
   return (
@@ -191,7 +188,7 @@ const renderColumn = ({ props }, key, pagination, listeners, interceptors) => {
   )
 }
 
-const renderColumnGroup = ({ props }, key, pagination, listeners, interceptors) => {
+const renderColumnGroup = ({ props }, key, pagination, listeners, intercepters) => {
   const { children } = props
   const columnsChildren = Children.pick(children, [identifiers.Column, identifiers.ColumnGroup])
 
@@ -199,15 +196,15 @@ const renderColumnGroup = ({ props }, key, pagination, listeners, interceptors) 
     <ColumnGroup key={key} {...pick(props, ['title'])}>
       {columnsChildren.map((child, index) => {
         if (Children.is(child, identifiers.ColumnGroup)) {
-          return renderColumnGroup(child, `${key}.${index}`, pagination, listeners, interceptors)
+          return renderColumnGroup(child, `${key}.${index}`, pagination, listeners, intercepters)
         }
-        return renderColumn(child, `${key}.${index}`, pagination, listeners, interceptors)
+        return renderColumn(child, `${key}.${index}`, pagination, listeners, intercepters)
       })}
     </ColumnGroup>
   )
 }
 
-export function render({ state, listeners, interceptors, children }) {
+export function render({ state, listeners, intercepters, children }) {
   let { pagination, rowSelection } = state
   if (pagination) {
     pagination = {
@@ -257,9 +254,9 @@ export function render({ state, listeners, interceptors, children }) {
     >
       {columnsChildren.map((child, index) => {
         if (Children.is(child, identifiers.ColumnGroup)) {
-          return renderColumnGroup(child, index, pagination, listeners, interceptors)
+          return renderColumnGroup(child, index, pagination, listeners, intercepters)
         }
-        return renderColumn(child, index, pagination, listeners, interceptors)
+        return renderColumn(child, index, pagination, listeners, intercepters)
       })}
     </Table>
   )

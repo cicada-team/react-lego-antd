@@ -1,15 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Tooltip } from 'antd'
-import { noop } from '../common'
-import { id, compose } from '../util'
+import { compose } from '../util'
 import { Children } from '../lego'
 
 const POSITIONS = ['top', 'left', 'right', 'bottom', 'topLeft', 'topRight', 'bottomLeft', 'bottomRight',
   'leftTop', 'leftBottom', 'rightTop', 'rightBottom']
 const EVENTS = ['hover', 'focus', 'click']
 
-export const defaultState = {
+export const getDefaultState = () => ({
   title: '',
   placement: POSITIONS[0],
   arrowPointAtCenter: false,
@@ -18,7 +17,7 @@ export const defaultState = {
   mouseLeaveDelay: 0,
   trigger: EVENTS[0],
   overlayClassName: '',
-}
+})
 
 export const stateTypes = {
   title: PropTypes.string,
@@ -32,17 +31,16 @@ export const stateTypes = {
 }
 
 export const defaultListeners = {
-  onVisibleChange({ state }, visible) {
+  onVisibleChange(_, visible) {
     return {
-      ...state,
       visible,
     }
   },
 }
 
 export const identifiers = {
-  Title: id(noop),
-  Presenter: id(noop),
+  Title: {},
+  Presenter: {},
 }
 
 export function render({ state, listeners, children }) {

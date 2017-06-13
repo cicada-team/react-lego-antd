@@ -1,169 +1,81 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import classNames from 'classnames'
-import exist from '@alipay/cicada-render/lib/exist'
-import Scope from '@alipay/cicada-render/lib/components/Scope'
-import { id, compose } from '../util'
-import { Children } from '../lego'
-import {
-  noop,
-} from '../common'
+import { Tree } from 'antd'
+import { pick } from '../util'
 
-/*
- identifier
- */
-export const identifiers = {
-  Presenter: id(noop),
-}
+const TreeNode = Tree.TreeNode
 
-/*
- props
- */
-export const defaultState = {
-  value: [],
-  selectable: true,
-  focusedPath: '',
-  editMode: false,
-  focusedInEdit: false,
-}
+export const getDefaultState = () => ({
+  items: [],
+  multiple: false,
+  checkable: false,
+  defaultExpandAll: false,
+  defaultExpandedKeys: [],
+  expandedKeys: [],
+  defaultCheckedKeys: [],
+  checkedKeys: [],
+  defaultSelectedKeys: [],
+  selectedKeys: [],
+  showLine: false,
+})
 
 export const stateTypes = {
-  value: PropTypes.array,
-  selectable: PropTypes.bool,
-  focusedPath: PropTypes.string,
-  editMode: PropTypes.bool,
-  focusedInEdit: PropTypes.bool,
+  items: PropTypes.array,
+  multiple: PropTypes.bool,
+  checkable: PropTypes.bool,
+  defaultExpandAll: PropTypes.bool,
+  defaultExpandedKeys: PropTypes.array,
+  expandedKeys: PropTypes.array,
+  defaultCheckedKeys: PropTypes.array,
+  checkedKeys: PropTypes.array,
+  defaultSelectedKeys: PropTypes.array,
+  selectedKeys: PropTypes.array,
+  showLine: PropTypes.bool,
 }
 
 
-/*
- reduce functions
- */
 export const defaultListeners = {
-  onCheck({ state }, statePath) {
-    const newState = { ...state, value: [...state.value] }
-    const origin = exist.get(newState, statePath)
-    origin.checked = true
-    return newState
-  },
-  onUncheck({ state }, statePath) {
-    const newState = { ...state, value: [...state.value] }
-    const origin = exist.get(newState, statePath)
-    origin.checked = false
-    return newState
-  },
-  onExpand({ state }, statePath) {
-    const newState = { ...state, value: [...state.value] }
-    const origin = exist.get(newState, statePath)
-    origin.expanded = true
-    return newState
-  },
-  onFold({ state }, statePath) {
-    const newState = { ...state, value: [...state.value] }
-    const origin = exist.get(newState, statePath)
-    origin.expanded = false
-    return newState
-  },
-  onFocus({ state }, statePath) {
+  onExpand({ state }, expandedKeys) {
     return {
-      ...state,
-      focusedPath: statePath,
+      autoExpandParent: false,
+      expandedKeys,
+    }
+  },
+  onCheck({ state }, checkedKeys) {
+    return {
+      checkedKeys,
+    }
+  },
+  onSelect({ state }, selectedKeys) {
+    return {
+      selectedKeys,
     }
   },
 }
 
-function renderTreeNode(tree, presenter, currentStatePath, listeners, parentPath, config = {}) {
-  const { checked = false, expanded = true, isLeaf, children = [], disableCheckbox = false } = tree
-  const absoluteStatePath = parentPath === undefined ? currentStatePath : `${parentPath}.${currentStatePath}`
 
-  const onCheckChange = () => {
-    if (disableCheckbox) {
-      return
+export function render({ state, listeners }) {
+  const { items } = state
+
+  const loop = data => data.map((item) => {
+    if (item.children && item.children.length) {
+      return (
+        <TreeNode key={item.key} title={item.key} {...pick(item, ['disabled', 'disableCheckbox', 'isLeaf'])}>
+          {loop(item.children)}
+        </TreeNode>
+      )
     }
-    if (!checked) {
-      listeners.onCheck(absoluteStatePath)
-    } else {
-      listeners.onUncheck(absoluteStatePath)
-    }
-  }
-
-  const onFocus = () => listeners.onFocus(absoluteStatePath)
-
-  const checkboxClass = classNames({
-    'ant-tree-checkbox': true,
-    'ant-tree-checkbox-checked': checked,
-    'ant-tree-checkbox-disabled': disableCheckbox,
-  })
-
-  const checkbox = config.selectable ? (
-    <span className={checkboxClass} onClick={onCheckChange}>
-      <span className="ant-tree-checkbox-inner" />
-    </span>
-  ) : null
-
-  let disabled = false
-  if (config.editMode && (config.focusedPath !== currentStatePath || !config.focusedInEdit)) {
-    disabled = true
-  }
-
-  const focusStyle = classNames({
-    'ant-tree-node-selected': config.focusedPath === currentStatePath,
-  })
-  const presenterNode = presenter === undefined ? (tree.value) : React.cloneElement(presenter, { disabled })
-  const finalPresenter = <a onClick={onFocus} className={focusStyle}>{presenterNode}</a>
-
-  const subTreeNode = expanded ? children.map((subTree, i) => {
-    const relativePath = `children.${i}`
     return (
-      <Scope relativeChildStatePath={relativePath} key={i}>
-        {renderTreeNode(subTree, presenter, relativePath, listeners, absoluteStatePath, config)}
-      </Scope>
+      <TreeNode key={item.key} title={item.key} {...pick(item, ['disabled', 'disableCheckbox', 'isLeaf'])} />
     )
-  }) : null
-
-  // 如果是叶子节点或者子节点长度为0，不展示下拉箭头
-  const expandableChildren = isLeaf === undefined ? (typeof children !== 'string' && children.length !== 0) : !isLeaf
-
-  const switcherClass = classNames({
-    'ant-tree-switcher': true,
-    [`ant-tree-noline_${expanded ? 'open' : 'close'}`]: expandableChildren,
   })
 
-  const onExpandChange = () => {
-    if (expanded) {
-      listeners.onFold(absoluteStatePath)
-    } else {
-      listeners.onExpand(absoluteStatePath)
-    }
-  }
-  const switcher = (<span className={switcherClass} onClick={onExpandChange} />)
-
   return (
-    <li>
-      {switcher}
-      {checkbox}
-      {finalPresenter}
-      <ul className="ant-tree-child-tree ant-tree-child-tree-open">
-        {subTreeNode}
-      </ul>
-    </li>
-  )
-}
-
-/*
- render
- */
-export function render({ state, listeners, children }) {
-  const { value, ...config } = state
-  const presenter = compose(Children.find, Children.hasChildren)(children, identifiers.Presenter) ? (Children.findChildren(children, identifiers.Presenter)[0]) : undefined
-
-  return (
-    <ul className="ant-tree">
-      {value.map((tree, i) => (
-        <Scope relativeChildStatePath={`value.${i}`} key={i}>
-          {renderTreeNode(tree, presenter, `value.${i}`, listeners, undefined, config)}
-        </Scope>
-      ))}
-    </ul>
+    <Tree
+      {...listeners}
+      {...pick(state, ['multiple', 'checkable', 'defaultExpandAll', 'defaultExpandedKeys', 'defaultCheckedKeys', 'defaultSelectedKeys', 'showLine'])}
+    >
+      {loop(items)}
+    </Tree>
   )
 }

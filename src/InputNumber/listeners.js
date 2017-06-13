@@ -1,4 +1,4 @@
-import { keep, COMMON_INPUT_EVENT } from '../common'
+import { noop, COMMON_INPUT_EVENT } from '../common'
 import { zip } from '../util'
 
 const computeValue = (type, state) => {
@@ -18,20 +18,19 @@ const computeValue = (type, state) => {
 }
 
 const step = (type, state) => {
-  if (state.disabled === true) return { ...state }
+  if (state.disabled === true) return
 
-  if (isNaN(state.value)) return { ...state }
+  if (isNaN(state.value)) return
 
   const newValue = computeValue(type, state)
   if (
     (isFinite(state.max) && newValue > state.max) ||
     (isFinite(state.min) && newValue < state.min)
   ) {
-    return { ...state }
+    return
   }
 
   return {
-    ...state,
     focused: true,
     value: newValue,
   }
@@ -54,15 +53,14 @@ function parseNumber(str) {
 }
 
 export default {
-  ...zip(COMMON_INPUT_EVENT, new Array(COMMON_INPUT_EVENT.length).fill(keep)),
-  onChange({ state }, e) {
+  ...zip(COMMON_INPUT_EVENT, new Array(COMMON_INPUT_EVENT.length).fill(noop)),
+  onChange(_, e) {
     const newValue = parseNumber(e.target.value)
     return {
-      ...state,
       value: isNaN(newValue) ? undefined : newValue,
     }
   },
-  onEnter: keep,
+  onEnter: noop,
   onDown,
   onUp,
 }

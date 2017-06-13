@@ -1,26 +1,21 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Popover } from 'antd'
-import { id, omit, compose } from '../util'
+import { omit, compose } from '../util'
 import { Children } from '../lego'
-import {
-  noop,
-} from '../common'
 
 export const PLACEMENTS = ['top', 'left', 'right', 'bottom', 'topLeft', 'topRight', 'bottomLeft',
   'bottomRight', 'leftTop', 'leftBottom', 'rightTop', 'rightBottom']
 export const TRIGGERS = ['hover', 'focus', 'click']
 
-/*
- state
- */
-export const defaultState = {
+export const getDefaultState = () => ({
   trigger: TRIGGERS[0],
   placement: PLACEMENTS[0],
   visible: false,
   title: '',
   content: '',
-}
+})
+
 export const stateTypes = {
   trigger: PropTypes.oneOf(TRIGGERS),
   placement: PropTypes.oneOf(PLACEMENTS),
@@ -29,30 +24,20 @@ export const stateTypes = {
   content: PropTypes.string,
 }
 
-/*
- reduce functions
- */
 export const defaultListeners = {
-  onVisibleChange({ state }, visible) {
+  onVisibleChange(_, visible) {
     return {
-      ...state,
       visible,
     }
   },
 }
 
-/*
- identifier
- */
 export const identifiers = {
-  Title: id(noop),
-  Content: id(noop),
-  Presenter: id(noop),
+  Title: {},
+  Content: {},
+  Presenter: {},
 }
 
-/*
- render
- */
 export function render({ state, listeners, children }) {
   const title = compose(Children.find, Children.hasChildren)(children, identifiers.Title) ? (
     Children.findChildren(children, identifiers.Title)[0]

@@ -1,18 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Dialog from './Dialog'
-import { id, compose } from '../util'
+import { compose } from '../util'
 import { Children } from '../lego'
-import {
-  noop,
-} from '../common'
 
-/*
- props
- */
-export const defaultState = {
+export const getDefaultState = () => ({
   width: '100%',
-}
+})
 
 export const stateTypes = {
   width: PropTypes.string,
@@ -22,9 +16,9 @@ export const stateTypes = {
  identifier
  */
 export const identifiers = {
-  Title: id(noop),
-  Footer: id(noop),
-  Content: id(noop),
+  Title: {},
+  Footer: {},
+  Content: {},
 }
 
 /*

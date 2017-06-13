@@ -1,20 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Card } from 'antd'
-import { id } from '../util'
-import {
-  noop,
-} from '../common'
 import { Children } from '../lego'
 
 /*
  props
  */
-export const defaultState = {
+export const getDefaultState = () => ({
   title: '',
   bordered: true,
   bodyStyle: {},
-}
+})
 
 export const stateTypes = {
   title: PropTypes.string,
@@ -26,8 +22,8 @@ export const stateTypes = {
  identifier
  */
 export const identifiers = {
-  Extra: id(noop),
-  Content: id(noop),
+  Extra: {},
+  Content: {},
 }
 
 /*

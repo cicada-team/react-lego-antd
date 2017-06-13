@@ -5,15 +5,12 @@ import {
   SIZES,
 } from '../common'
 
-/*
- state
- */
-export const defaultState = {
+export const getDefaultState = () => ({
   spinning: false,
   size: SIZES[0],
   tip: '',
   delay: undefined,
-}
+})
 
 export const stateTypes = {
   spinning: PropTypes.bool,
@@ -22,9 +19,6 @@ export const stateTypes = {
   delay: PropTypes.number,
 }
 
-/*
- render
- */
 export function render({ state, children }) {
   return <Spin {...state} >{children}</Spin>
 }

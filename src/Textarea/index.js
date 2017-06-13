@@ -11,10 +11,7 @@ import {
   createFormItemDefaultState,
 } from '../common'
 
-/*
- props
- */
-export const defaultState = {
+export const getDefaultState = () => ({
   ...createFormItemDefaultState(),
   value: '',
   placeholder: '',
@@ -26,7 +23,7 @@ export const defaultState = {
   minRows: 2,
   maxRows: 6,
   readOnly: false,
-}
+})
 
 export const stateTypes = {
   ...COMMON_FORM_ITEM_STATE_TYPES,
@@ -42,25 +39,16 @@ export const stateTypes = {
   readOnly: PropTypes.bool,
 }
 
-
-/*
- reduce functions
- */
 export const defaultListeners = {
   ...zip(COMMON_INPUT_EVENT, new Array(COMMON_INPUT_EVENT.length).fill(keep)),
-  onChange({ state }, e) {
+  onChange(_, e) {
     return {
-      ...state,
       value: e.target.value,
     }
   },
   onPressEnter: keep,
 }
 
-
-/*
- render
- */
 export function render({ state, listeners }) {
   const inputProps = pick(state, ['value', 'disabled', 'size', 'placeholder', 'readOnly'])
   const autosize = {

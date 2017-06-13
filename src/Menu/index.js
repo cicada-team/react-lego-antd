@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Menu, Icon } from 'antd'
 import { omit } from '../util'
 import { ErrorWrongChildType, ErrorUnknownChildType } from '../errors'
-import { keep } from '../common'
+import { noop } from '../common'
 
 const { SubMenu, ItemGroup, Item } = Menu
 const THEME = ['light', 'dark']
@@ -12,10 +12,7 @@ const TYPE_ITEM = 'item'
 const TYPE_GROUP = 'group'
 const TYPE_MENU = 'menu'
 
-/*
- state
- */
-export const defaultState = {
+export const getDefaultState = () => ({
   theme: THEME[0],
   mode: MODE[0],
   selectedKeys: [],
@@ -23,7 +20,7 @@ export const defaultState = {
   items: [],
   inlineIndent: 24,
   multiple: false,
-}
+})
 
 export const stateTypes = {
   theme: PropTypes.oneOf(THEME),
@@ -36,23 +33,20 @@ export const stateTypes = {
 }
 
 export const defaultListeners = {
-  onClick: keep,
-  onTitleClick: keep,
-  onSelect: ({ state }, { selectedKeys }) => {
+  onClick: noop,
+  onTitleClick: noop,
+  onSelect: (_, { selectedKeys }) => {
     return {
-      ...state,
       selectedKeys,
     }
   },
-  onDeselect: ({ state }, { selectedKeys }) => {
+  onDeselect: (_, { selectedKeys }) => {
     return {
-      ...state,
       selectedKeys,
     }
   },
-  onOpenChange: ({ state }, openKeys) => {
+  onOpenChange: (_, openKeys) => {
     return {
-      ...state,
       openKeys,
     }
   },
@@ -87,9 +81,6 @@ function renderMenuItem(item, limit, parent, parentIndexNum, listeners) {
   return result
 }
 
-/*
- render
- */
 export function render({ state, listeners }) {
   const props = omit(state, ['items'])
   return (

@@ -17,7 +17,7 @@ const { MonthPicker } = DatePicker
 /*
  props
  */
-export const defaultState = {
+export const getDefaultState = () => ({
   ...createFormItemDefaultState(),
   value: undefined,
   format: 'YYYY-MM',
@@ -25,7 +25,7 @@ export const defaultState = {
   disabled: false,
   style: {},
   allowClear: true,
-}
+})
 
 export const stateTypes = {
   ...COMMON_FORM_ITEM_STATE_TYPES,
@@ -42,26 +42,28 @@ export const stateTypes = {
  */
 export const defaultListeners = {
   ...zip(COMMON_INPUT_EVENT, new Array(COMMON_INPUT_EVENT.length).fill(keep)),
-  onChange({ state }, value, valueString) {
+  onChange(_, __, valueString) {
     return {
-      ...state,
       value: valueString,
     }
   },
   onOpenChange: keep,
 }
 
-export const interceptors = ['disabledDate', 'getCalendarContainer']
+export const defaultIntercepters = {
+  disabledDate: undefined,
+  getCalendarContainer: undefined,
+}
 
 /*
  render
  */
-export function render({ state, listeners, interceptors: finalInterceptors }) {
+export function render({ state, listeners, intercepters: finalIntercepters }) {
   const inputProps = pick(state, ['format', 'size', 'disabled', 'style', 'allowClear'])
   const value = !state.value ? null : moment(state.value, state.format)
 
   return createFormItem(
     state,
-    <MonthPicker value={value} {...inputProps} {...listeners} {...finalInterceptors} />
+    <MonthPicker value={value} {...inputProps} {...listeners} {...finalIntercepters} />
   )
 }

@@ -1,18 +1,16 @@
+// TODO 不行，例子跑不起来
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Carousel } from 'antd'
 
 const scrollxs = ['scrollx', 'fade']
 
-/*
- props
- */
-export const defaultState = {
+export const getDefaultState = () => ({
   effect: scrollxs[0],
   dots: true,
   vertical: false,
   autoplay: false,
-}
+})
 
 export const stateTypes = {
   effect: PropTypes.oneOf(scrollxs),
@@ -21,16 +19,9 @@ export const stateTypes = {
   autoplay: PropTypes.bool,
 }
 
-/*
- reduce functions
- */
 export const defaultListeners = {
-  beforeChange({ state }) {
-    return state
-  },
-  afterChange({ state }) {
-    return state
-  },
+  beforeChange() {},
+  afterChange() {},
 }
 
 const renderCarousel = (children) => {

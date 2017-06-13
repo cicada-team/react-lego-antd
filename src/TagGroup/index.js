@@ -5,14 +5,11 @@ import { omit } from '../util'
 
 const colors = ['', 'blue', 'green', 'yellow', 'red']
 
-/*
- props
- */
-export const defaultState = {
+export const getDefaultState = () => ({
   closable: true,
   color: colors[0],
   list: [],
-}
+})
 
 export const stateTypes = {
   closable: PropTypes.bool,
@@ -20,24 +17,15 @@ export const stateTypes = {
   list: PropTypes.array,
 }
 
-/*
- reduce functions
- */
 export const defaultListeners = {
   onClose({ state }, removeTag) {
-    const newState = { ...state }
-    newState.list = newState.list.filter(tag => removeTag.id !== tag.id)
-    return newState
+    return {
+      list: state.list.filter(tag => removeTag.id !== tag.id)
+    }
   },
-  onClick({ state }) {
-    return state
-  },
-  onMouseEnter({ state }) {
-    return state
-  },
-  onMouseLeave({ state }) {
-    return state
-  },
+  onClick() {},
+  onMouseEnter() {},
+  onMouseLeave() {},
 }
 
 function renderTags(tag, { state, listeners }) {
@@ -51,14 +39,13 @@ function renderTags(tag, { state, listeners }) {
     return listeners.onClose(tag)
   }
 
-  return (<Tag key={tag.id} {...omit(state, 'list')} onClose={onClose} onClick={onClick} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
-    {tag.text}
-  </Tag>)
+  return (
+    <Tag key={tag.id} {...omit(state, 'list')} onClose={onClose} onClick={onClick} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+      {tag.text}
+    </Tag>
+  )
 }
 
-/*
- render
- */
 export function render({ state, listeners }) {
   return (<div>
     {

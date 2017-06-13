@@ -1,14 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-/*
- state
- */
-export const defaultState = {
+export const getDefaultState = () => ({
   src: '',
   width: '',
   height: '',
-}
+})
 
 export const stateTypes = {
   src: PropTypes.string,
@@ -16,9 +13,6 @@ export const stateTypes = {
   height: PropTypes.string,
 }
 
-/*
- render
- */
 export function render({ state }) {
   return (
     <iframe {...state} frameBorder="no" />

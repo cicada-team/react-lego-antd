@@ -46,10 +46,8 @@ export default () => render({
       },
     },
     {
-      type: 'Block',
       children: [
         {
-          type: 'Box',
           getInitialState: () => ({
             flex: '1',
             spacing: 'none',
@@ -84,12 +82,11 @@ export default () => render({
                 },
               },
             },
-          ]
+          ],
         }, {
-          type: 'Box',
           getInitialState: () => ({
             width: '200px',
-            padding: '4px 0 0 4px'
+            padding: '4px 0 0 4px',
           }),
           children: [
             {

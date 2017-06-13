@@ -1,26 +1,23 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Steps, Icon } from 'antd'
-import Scope from '@alipay/cicada-render/lib/components/Scope'
-import { pick, id } from '../util'
+import Scope from '@cicada/render/lib/components/Scope'
+import { pick } from '../util'
 import { Children } from '../lego'
 import {
-  noop,
   SIZES,
 } from '../common'
 
 const STATUS = ['process', 'wait', 'finish', 'error']
 const DIRECTION = ['horizontal', 'vertical']
-/*
- props
- */
-export const defaultState = {
+
+export const getDefaultState = () => ({
   current: 0,
   size: SIZES[0],
   status: STATUS[0],
   direction: DIRECTION[0],
   steps: [],
-}
+})
 
 export const stateTypes = {
   current: PropTypes.number,
@@ -30,17 +27,11 @@ export const stateTypes = {
   steps: PropTypes.array,
 }
 
-/*
- identifier
- */
 export const identifiers = {
-  Title: id(noop),
-  Description: id(noop),
+  Title: {},
+  Description: {},
 }
 
-/*
- render
- */
 export function render({ state, children }) {
   if (state.steps.length === 0) return null
 

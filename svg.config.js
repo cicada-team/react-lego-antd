@@ -11,7 +11,7 @@ module.exports = function (config) {
   })
   // Note: https://github.com/kisenka/svg-sprite-loader/issues/4
   // Can not process SVG files twice
-  if (config.module.loaders[0].loader !== 'svg-sprite-loader') {
+  if (config.module.loaders.length > 0 && config.module.loaders[0].loader !== 'svg-sprite-loader') {
     config.module.loaders.unshift({
       test: /\.svg$/,
       loader: 'svg-sprite-loader',

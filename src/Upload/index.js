@@ -11,10 +11,8 @@ import {
 } from '../common'
 
 const LIST_TYPES = ['text', 'picture']
-/*
- props
- */
-export const defaultState = {
+
+export const getDefaultState = () => ({
   ...createFormItemDefaultState(),
   name: '',
   defaultFileList: [],
@@ -29,7 +27,7 @@ export const defaultState = {
   text: '选择文件',
   size: SIZES[0],
   disabled: false,
-}
+})
 
 export const stateTypes = {
   ...COMMON_FORM_ITEM_STATE_TYPES,
@@ -48,9 +46,6 @@ export const stateTypes = {
   disabled: PropTypes.bool,
 }
 
-/*
- reduce functions
- */
 export const defaultListeners = {
   onChange({ state }, { fileList }) {
     return {
@@ -65,17 +60,14 @@ export const defaultListeners = {
   onRemove: keep,
 }
 
-export const interceptors = ['beforeUpload']
+export const defaultIntercepters = { beforeUpload: undefined }
 
-/*
- render
- */
-export function render({ state, listeners, interceptors: finalInterceptors }) {
+export function render({ state, listeners, intercepters: finalIntercepters }) {
   const uploadProps = pick(state, ['name', 'defaultFileList', 'action', 'data', 'headers', 'showUploadList', 'multiple', 'accept', 'listType', 'fileList'])
 
   return createFormItem(
     state,
-    <Upload {...uploadProps} {...listeners} {...finalInterceptors}>
+    <Upload {...uploadProps} {...listeners} {...finalIntercepters}>
       <Button>
         <Icon type="upload" />
         {state.text}

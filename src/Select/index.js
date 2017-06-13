@@ -15,9 +15,6 @@ const { Option, OptGroup } = Select
 const OPTION_FILTER_PROP = ['value', 'children']
 const MODES = ['default', 'multiple', 'tags', 'combobox']
 
-/*
- state
- */
 export const getDefaultState = () => ({
   ...createFormItemDefaultState(),
   options: [],
@@ -52,13 +49,9 @@ export const stateTypes = {
   defaultActiveFirstOption: PropTypes.bool,
 }
 
-/*
- reduce functions
- */
 export const defaultListeners = {
-  onChange({ state }, value) {
+  onChange(_, value) {
     return {
-      ...state,
       value,
     }
   },
@@ -86,12 +79,11 @@ function renderOption(option, index) {
   )
 }
 
-export const interceptors = ['filterOption']
+export const defaultIntercepters = {
+  filterOption: undefined,
+}
 
-/*
- render
- */
-export function render({ state, listeners, interceptors: finalInterceptors }) {
+export function render({ state, listeners, intercepters: finalIntercepters }) {
   const selectProps = pick(state, ['optionFilterProp', 'showSearch', 'allowClear', 'disabled', 'value', 'placeholder', 'size', 'notFoundContent', 'dropdownMatchSelectWidth', 'defaultActiveFirstOption'])
   if (state.mode !== MODES[0]) {
     selectProps.mode = state.mode
@@ -103,7 +95,7 @@ export function render({ state, listeners, interceptors: finalInterceptors }) {
 
   return (
     createFormItem(state, (
-      <Select {...listeners} {...selectProps} style={style} {...finalInterceptors}>
+      <Select {...listeners} {...selectProps} style={style} {...finalIntercepters}>
         {state.options.map(renderOption)}
       </Select>)
     )

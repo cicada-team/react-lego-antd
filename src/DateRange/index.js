@@ -17,7 +17,7 @@ const { RangePicker: DateRange } = DatePicker
 /*
  props
  */
-export const defaultState = {
+export const getDefaultState = () => ({
   ...createFormItemDefaultState(),
   startValue: '',
   endValue: '',
@@ -27,7 +27,7 @@ export const defaultState = {
   size: SIZES[0],
   disabled: false,
   style: {},
-}
+})
 
 export const stateTypes = {
   ...COMMON_FORM_ITEM_STATE_TYPES,
@@ -46,27 +46,30 @@ export const stateTypes = {
  */
 export const defaultListeners = {
   ...zip(COMMON_INPUT_EVENT, new Array(COMMON_INPUT_EVENT.length).fill(keep)),
-  onChange({ state }, dates, [startValue, endValue]) {
+  onChange(_, __, [startValue, endValue]) {
     return {
-      ...state,
       startValue,
       endValue,
     }
   },
 }
 
-export const interceptors = ['disabledTime', 'disabledDate', 'getCalendarContainer']
+export const defaultIntercepters = {
+  disabledTime: undefined,
+  disabledDate: undefined,
+  getCalendarContainer: undefined,
+}
 
 /*
  render
  */
-export function render({ state, listeners, interceptors: finalInterceptors }) {
+export function render({ state, listeners, intercepters: finalIntercepters }) {
   const inputProps = pick(state, ['format', 'size', 'disabled', 'showTime', 'style', 'ranges'])
   const startValue = state.startValue === '' ? null : moment(state.startValue, state.format)
   const endValue = state.endValue === '' ? null : moment(state.endValue, state.format)
 
   return createFormItem(
     state,
-    <DateRange value={[startValue, endValue]} {...inputProps} {...listeners} {...finalInterceptors} />
+    <DateRange value={[startValue, endValue]} {...inputProps} {...listeners} {...finalIntercepters} />
   )
 }

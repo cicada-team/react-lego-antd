@@ -1,21 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Modal } from 'antd'
-import { pick, id, compose } from '../util'
+import { pick, compose } from '../util'
 import { Children } from '../lego'
-import {
-  noop,
-} from '../common'
 
-/*
- props
- */
-export const defaultState = {
+export const getDefaultState = () => ({
   visible: false,
   closable: true,
   maskClosable: true,
   width: undefined,
-}
+})
 
 export const stateTypes = {
   visible: PropTypes.bool,
@@ -24,30 +18,20 @@ export const stateTypes = {
   width: PropTypes.string,
 }
 
-/*
- reduce functions
- */
 export const defaultListeners = {
-  onClose({ state }) {
+  onClose() {
     return {
-      ...state,
       visible: false,
     }
   },
 }
 
-/*
- identifier
- */
 export const identifiers = {
-  Title: id(noop),
-  Footer: id(noop),
-  Content: id(noop),
+  Title: {},
+  Footer: {},
+  Content: {},
 }
 
-/*
- render
- */
 export function render({ state, children, listeners }) {
   const title = compose(Children.find, Children.hasChildren)(children, identifiers.Title) ? (
     Children.findChildren(children, identifiers.Title)[0]

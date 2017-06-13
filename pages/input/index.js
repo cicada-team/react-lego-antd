@@ -1,4 +1,3 @@
-// TODO 未通过
 import render from '../../util/render'
 export default () => render({
   children: [{

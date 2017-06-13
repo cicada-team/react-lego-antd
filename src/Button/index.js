@@ -39,3 +39,5 @@ export function render({ state, listeners }) {
 
   return <Button {...props} {...listeners}>{state.text}</Button>
 }
+
+export const display = 'inline'

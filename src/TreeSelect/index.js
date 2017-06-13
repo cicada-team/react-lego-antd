@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { TreeSelect } from 'antd'
 import { pick, zip } from '../util'
 import {
-  keep,
+  noop,
   createFormItem,
   SIZES,
   COMMON_INPUT_EVENT,
@@ -11,10 +11,7 @@ import {
   createFormItemDefaultState,
 } from '../common'
 
-/*
- props
- */
-export const defaultState = {
+export const getDefaultState = () => ({
   ...createFormItemDefaultState(),
   value: undefined,
   labelInValue: false,
@@ -26,7 +23,7 @@ export const defaultState = {
   treeData: [],
   size: SIZES[0],
   disabled: false,
-}
+})
 
 export const stateTypes = {
   ...COMMON_FORM_ITEM_STATE_TYPES,
@@ -42,16 +39,11 @@ export const stateTypes = {
   placeholder: PropTypes.string,
 }
 
-
-/*
- reduce functions
- */
 export const defaultListeners = {
-  ...zip(COMMON_INPUT_EVENT, new Array(COMMON_INPUT_EVENT.length).fill(keep)),
-  onSelect: keep,
-  onChange({ state }, value) {
+  ...zip(COMMON_INPUT_EVENT, new Array(COMMON_INPUT_EVENT.length).fill(noop)),
+  onSelect: noop,
+  onChange(_, value) {
     return {
-      ...state,
       value,
     }
   },

@@ -14,7 +14,7 @@ const EXPAND_TRIGGER = ['click', 'hover']
 /*
  props
  */
-export const defaultState = {
+export const getDefaultState = () => ({
   ...createFormItemDefaultState(),
   options: [],
   value: [],
@@ -26,7 +26,7 @@ export const defaultState = {
   placeholder: '',
   size: SIZES[0],
   disabled: false,
-}
+})
 
 export const stateTypes = {
   ...COMMON_FORM_ITEM_STATE_TYPES,
@@ -47,23 +47,26 @@ export const stateTypes = {
  reduce functions
  */
 export const defaultListeners = {
-  onChange({ state }, value) {
+  onChange(_, value) {
     return {
-      ...state,
       value,
     }
   },
 }
 
-export const interceptors = ['loadData', 'displayRender']
+export const defaultIntercepters = {
+  loadData:  undefined,
+  displayRender: undefined
+}
 
 /*
  render
  */
-export function render({ state, listeners, interceptors: finalInterceptors }) {
+export function render({ state, listeners, intercepters: finalIntercepters }) {
+  console.log(finalIntercepters)
   const inputProps = pick(state, ['size', 'style', 'value', 'options', 'allowClear', 'expandTrigger', 'placeholder', 'changeOnSelect', 'showSearch', 'notFoundContent'])
   return createFormItem(
     state,
-    <Cascader {...inputProps} {...listeners} {...finalInterceptors} />
+    <Cascader {...inputProps} {...listeners} {...finalIntercepters} />
   )
 }

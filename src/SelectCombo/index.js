@@ -5,7 +5,7 @@ import { pick } from '../util'
 import {
   SIZES,
   createFormItem,
-  keep,
+  noop,
   COMMON_FORM_ITEM_STATE_TYPES,
   createFormItemDefaultState,
 } from '../common'
@@ -17,7 +17,7 @@ const OPTION_FILTER_PROP = ['value', 'children']
 /*
  state
  */
-export const defaultState = {
+export const getDefaultState = () => ({
   ...createFormItemDefaultState(),
   options: [],
   value: [],
@@ -30,7 +30,7 @@ export const defaultState = {
   notFoundContent: '没有找到',
   dropdownMatchSelectWidth: true,
   defaultActiveFirstOption: true,
-}
+})
 
 export const stateTypes = {
   ...COMMON_FORM_ITEM_STATE_TYPES,
@@ -51,13 +51,12 @@ export const stateTypes = {
  reduce functions
  */
 export const defaultListeners = {
-  onChange({ state }, value) {
+  onChange(_, value) {
     return {
-      ...state,
       value,
     }
   },
-  onSearch: keep,
+  onSearch: noop,
 }
 
 
@@ -77,15 +76,15 @@ function renderOption(option, index) {
   )
 }
 
-export const interceptors = ['filterOption']
+export const defaultInterceptors = { filterOption: undefined }
 
 /*
  render
  */
-export function render({ state, listeners, interceptors: finalInterceptors }) {
+export function render({ state, listeners, intercepters: finalIntercepters }) {
   const selectProps = pick(state, ['optionFilterProp', 'showSearch', 'allowClear', 'disabled', 'value', 'placeholder', 'size', 'notFoundContent', 'dropdownMatchSelectWidth', 'defaultActiveFirstOption'])
   return createFormItem(state, (
-    <Select mode="multiple" {...listeners} {...selectProps} style={{ width: '100%' }} {...finalInterceptors}>
+    <Select mode="multiple" {...listeners} {...selectProps} style={{ width: '100%' }} {...finalIntercepters}>
       {state.options.map(renderOption)}
     </Select>
   ))

@@ -1,14 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Scope from '@alipay/cicada-render/lib/components/Scope'
+import Scope from '@cicada/render/lib/components/Scope'
 
 /*
  props
  */
-export const defaultState = {
+export const getDefaultState = () => ({
   items: [],
   inline: false,
-}
+})
 
 export const stateTypes = {
   items: PropTypes.array,

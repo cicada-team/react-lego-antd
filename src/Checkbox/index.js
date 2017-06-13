@@ -3,15 +3,12 @@ import PropTypes from 'prop-types'
 import { Checkbox } from 'antd'
 import { omit } from '../util'
 
-/*
- state
- */
-export const defaultState = {
+export const getDefaultState = () => ({
   text: '',
   disabled: false,
   checked: false,
   indeterminate: false,
-}
+})
 
 export const stateTypes = {
   text: PropTypes.string,
@@ -20,21 +17,17 @@ export const stateTypes = {
   indeterminate: PropTypes.bool,
 }
 
-/*
- reduce functions
- */
 export const defaultListeners = {
-  onChange({ state }, e) {
+  onChange(_, e) {
     return {
-      ...state,
       checked: e.target.checked,
     }
   },
 }
 
-/*
- render
- */
 export function render({ state, listeners }) {
+  console.log(state)
   return <Checkbox {...omit(state, 'text')} {...listeners}>{state.text}</Checkbox>
 }
+
+export const display = 'inline'
