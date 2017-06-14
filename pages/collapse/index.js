@@ -1,4 +1,5 @@
 import render from '../../util/render'
+
 export default () => render({
   type: 'Collapse',
   bind: 'collapse',
@@ -16,8 +17,8 @@ export default () => render({
             fn({ store, statePath }) {
               const collapse = store.get('collapse')
               console.log('icon click statePath', statePath.toString())
-              collapse.items = collapse.items.filter((item, index) => index !== parseInt(statePath.get(-2)))
-              store.set('collapse', collapse)
+              const items = collapse.items.filter((item, index) => index !== parseInt(statePath.get(-2), 10))
+              store.merge('collapse', { items })
             },
           }],
         },

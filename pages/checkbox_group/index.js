@@ -1,4 +1,5 @@
 import render from '../../util/render'
+
 export default () => render({
   children: [{
     type: 'CheckboxGroup',
@@ -10,8 +11,8 @@ export default () => render({
     listeners: {
       onChange: {
         fns: [{
-          fn({ store, statePath }) {
-            console.log(arguments)
+          fn(...args) {
+            console.log(args)
           },
         }],
       },

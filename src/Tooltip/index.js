@@ -60,3 +60,5 @@ export function render({ state, listeners, children }) {
     </Tooltip>
   )
 }
+
+export const display = 'inline'

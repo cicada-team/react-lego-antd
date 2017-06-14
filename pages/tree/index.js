@@ -37,7 +37,7 @@ const treeNodes = [
             disableCheckbox: false,
             isLeaf: true,
           },
-        ]
+        ],
       },
       {
         key: '1-3',
@@ -45,7 +45,7 @@ const treeNodes = [
         disableCheckbox: false,
         isLeaf: false,
       },
-    ]
+    ],
   },
   {
     key: '2',

@@ -26,7 +26,6 @@ export const defaultListeners = {
 }
 
 export function render({ state, listeners }) {
-  console.log(state)
   return <Checkbox {...omit(state, 'text')} {...listeners}>{state.text}</Checkbox>
 }
 

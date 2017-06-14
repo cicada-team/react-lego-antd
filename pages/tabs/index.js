@@ -37,8 +37,9 @@ export default () => render({
       type: 'Tabs.Title',
       children: [{
         type: 'span',
-        interpolation: {},
-        children: ['${title.value}'],
+        interpolate({ stateTree, statePath }) {
+          return stateTree.get(statePath).title.value
+        },
       }],
     }, {
       type: 'Tabs.Content',
@@ -57,8 +58,9 @@ export default () => render({
       type: 'Tabs.Title',
       children: [{
         type: 'span',
-        interpolation: {},
-        children: ['${title.value}'],
+        interpolate({ stateTree, statePath }) {
+          return stateTree.get(statePath).title.value
+        },
       }],
     }, {
       type: 'Tabs.Content',
@@ -69,8 +71,9 @@ export default () => render({
           type: 'Tabs.Title',
           children: [{
             type: 'span',
-            interpolation: {},
-            children: ['${title.value}'],
+            interpolate({ stateTree, statePath }) {
+              return stateTree.get(statePath).title.value
+            },
           }],
         }, {
           type: 'Tabs.Content',

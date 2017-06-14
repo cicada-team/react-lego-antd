@@ -52,9 +52,9 @@ export default () => render({
     },
   }],
 }, {
-    dateRange: {
-      startValue: '20161201',
-      endValue: '20161201',
-    },
-  }
+  dateRange: {
+    startValue: '20161201',
+    endValue: '20161201',
+  },
+}
 )

@@ -51,11 +51,13 @@ function renderChildren(type, text) {
       {text} <Icon type="down" />
     </Button>)
   } else {
+    /* eslint-disable no-script-url */
     Component = (
       <a className="ant-dropdown-link" href="javascript:void(0)">
-      {text} <Icon type="down" />
+        {text} <Icon type="down" />
       </a>
     )
+    /* enable no-script-url */
   }
 
   return Component

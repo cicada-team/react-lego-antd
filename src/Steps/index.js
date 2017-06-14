@@ -48,13 +48,13 @@ export function render({ state, children }) {
       {state.steps.map((step, index) => {
         const titleNode = title.length !== 0 ? (
           <Scope relativeChildStatePath={`steps.${index}`}>
-            {title.map(t => ((typeof t === 'string') ? t : React.cloneElement(t)))}
+            {title.map(t => ((typeof t === 'string') ? t : t))}
           </Scope>
         ) : null
 
         const descriptionNode = description.length !== 0 ? (
           <Scope relativeChildStatePath={`steps.${index}`}>
-            {description.map(d => ((typeof d === 'string') ? d : React.cloneElement(d)))}
+            {description.map(d => ((typeof d === 'string') ? d : d))}
           </Scope>
         ) : null
 

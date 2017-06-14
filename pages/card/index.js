@@ -1,4 +1,5 @@
 import render from '../../util/render'
+
 export default () => render({
   type: 'Card',
   getInitialState: () => ({

@@ -20,7 +20,7 @@ export const stateTypes = {
 export const defaultListeners = {
   onClose({ state }, removeTag) {
     return {
-      list: state.list.filter(tag => removeTag.id !== tag.id)
+      list: state.list.filter(tag => removeTag.id !== tag.id),
     }
   },
   onClick() {},

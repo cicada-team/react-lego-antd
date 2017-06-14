@@ -1,5 +1,5 @@
-// TODO 未通过
 import render from '../../util/render'
+
 export default () => render({
   children: [
     {
@@ -65,7 +65,7 @@ export default () => render({
                 },
                 wrapperCol: {
                   span: 22,
-                }
+                },
               }),
               intercepters: {
                 filterOption: ({ store, util }, inputValue, option) => {
@@ -96,8 +96,8 @@ export default () => render({
                 type: 'search',
               },
             },
-          ]
-        }
+          ],
+        },
       ],
     },
   ],

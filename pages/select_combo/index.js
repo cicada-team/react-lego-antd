@@ -22,10 +22,10 @@ export default () => render({
     listeners: {
       onSearch: {
         fns: [{
-          fn({ store, statePath}) {
-            setTimeout(()=>{
+          fn({ store, statePath }) {
+            setTimeout(() => {
               const selectCombo = store.get(statePath)
-              selectCombo.options = [{label:'你好',value:'bbb'}]
+              selectCombo.options = [{ label: '你好', value: 'bbb' }]
               store.set(statePath, selectCombo)
             }, 1000)
           },

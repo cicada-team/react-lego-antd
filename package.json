@@ -1,7 +1,7 @@
 {
   "name": "@cicada/react-lego-antd",
   "description": "do not use this package",
-  "version": "1.0.0-alpha1",
+  "version": "1.0.0-alpha2",
   "scripts": {
     "installAll": "tnpm i && cd ./components && tnpm i && cd ..",
     "start": "next",
@@ -9,8 +9,8 @@
     "build": "rm -rf lib && babel src --out-dir lib && lessc src/index.less lib/index.css",
     "prepublish": "npm run build",
     "coverage": "jest --coverage",
-    "lint": "eslint render components examples",
-    "eslint-fix": "eslint--fix render components examples  --ext '.js,.jsx' && eslint-tinker ./examples/**/*.md",
+    "lint": "eslint src pages util",
+    "eslint-fix": "eslint --fix src pages util  --ext '.js,.jsx'",
     "commit": "./scripts/commit.js commit",
     "build-doc": "next build",
     "update-doc": "./scripts/doc.js && git add doc/",
@@ -60,7 +60,7 @@
     "mode": "npminstall"
   },
   "dependencies": {
-    "@cicada/render": "^1.0.0-alpha6",
+    "@cicada/render": "^1.0.0-alpha9",
     "antd": "^2.11.0",
     "babel-plugin-module-resolver": "^2.7.1",
     "classnames": "^2.2.5",

@@ -1,4 +1,5 @@
 import render from '../../util/render'
+
 export default () => render({
   children: [{
     type: 'Input',
@@ -12,7 +13,7 @@ export default () => render({
     listeners: {
       onClick: {
         fns: [{
-          fn() { console.log(1, arguments) },
+          fn(...args) { console.log(args) },
         }],
       },
     },
@@ -50,7 +51,7 @@ export default () => render({
         listeners: {
           onClick: {
             fns: [{
-              fn() { console.log(2, arguments) },
+              fn(...args) { console.log(args) },
             }],
           },
         },
@@ -76,8 +77,8 @@ export default () => render({
     listeners: {
       onBlur: {
         fns: [{
-          fn({ state }) {
-            return
+          fn(...args) {
+            console.log(args)
           },
         }],
       },

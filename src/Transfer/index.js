@@ -41,7 +41,7 @@ export const defaultListeners = {
   onSearchChange: noop,
 }
 
-export const defaultInterceptors = { filterOption: undefined }
+export const defaultIntercepters = { filterOption: undefined }
 
 export function render({ state, listeners, intercepters: finalIntercepters }) {
   return (<Transfer

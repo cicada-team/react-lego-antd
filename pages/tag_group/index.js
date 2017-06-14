@@ -23,25 +23,10 @@ const initialState = {
 }
 
 export default () => render({
-  children: [{
-    props: {
-      margin: '0 10px 0 0',
+  children: [
+    {
+      type: 'TagGroup',
+      bind: 'tagGroup',
     },
-    children: [
-      {
-        type: 'Button',
-        props: {
-          size: 'small',
-          text: 'test',
-        },
-      },
-    ],
-  }, {
-    children: [
-      {
-        type: 'TagGroup',
-        bind: 'tagGroup',
-      },
-    ],
-  }],
+  ],
 }, initialState)

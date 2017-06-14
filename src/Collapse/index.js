@@ -2,15 +2,15 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Collapse } from 'antd'
 import Scope from '@cicada/render/lib/components/Scope'
-import {  compose } from '../util'
+import { compose } from '../util'
 import { Children } from '../lego'
 
 const Panel = Collapse.Panel
 
-export const defaultState = {
-  activeKey: undefined,
+export const getDefaultState = () => ({
+  activeKey: [],
   items: [],
-}
+})
 
 export const stateTypes = {
   activeKey: PropTypes.array,
@@ -27,7 +27,6 @@ function toggle(arr = [], item) {
 
 export const defaultListeners = {
   onChange({ state }, key) {
-    console.log("change to key", toggle(state.activeKey, key), key)
     return {
       activeKey: toggle(state.activeKey, key),
     }
@@ -43,11 +42,7 @@ function ensureArray(obj) {
   return Array.isArray(obj) ? obj : [obj]
 }
 
-const renderCollapsePanel = (item, index, children, salt, listeners) => {
-  if (item.key === undefined) {
-    throw new Error('collapse items must have a key property in every item.')
-  }
-
+const renderCollapsePanel = (item, index, children, listeners) => {
   const extraPosition = { position: 'absolute', right: 5, top: 0 }
   const header = (
     <Scope relativeChildStatePath={`items.${index}`}>
@@ -74,11 +69,13 @@ const renderCollapsePanel = (item, index, children, salt, listeners) => {
 }
 
 export function render({ state, listeners, children }) {
-  const salt = Date.now().toString()
+  const itemHasKey = state.items.every(item => item.key !== undefined && item.key !== null)
+  if (!itemHasKey) throw new Error('collapse items must have a key property in each item.')
+
   const { activeKey = [] } = state
   return (
     <Collapse {...state} {...listeners} activeKey={activeKey}>
-      { state.items.map((item, index) => renderCollapsePanel(item, index, children, salt, listeners)) }
+      { state.items.map((item, index) => renderCollapsePanel(item, index, children, listeners)) }
     </Collapse>
   )
 }

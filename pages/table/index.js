@@ -17,7 +17,9 @@ export default () => render({
         },
         children: [{
           type: 'a',
-          children: ['${name}'],
+          interpolate({ stateTree, statePath }) {
+            return stateTree.get(statePath).name
+          },
         }],
       }, {
         type: 'Table.Column',
@@ -36,7 +38,7 @@ export default () => render({
       type: 'Table.ExpandedRow',
       children: [{
         type: 'div',
-        children: ['${address}']
+        children: ['${address}'],
       }],
     }],
   }, {
@@ -51,9 +53,9 @@ export default () => render({
           return 1
         } else if (a[dataIndex] < b[dataIndex]) {
           return -1
-        } else {
-          return 0
         }
+
+        return 0
       },
     },
     children: [{

@@ -1,4 +1,5 @@
 import render from '../../util/render'
+
 export default () => render({
   children: [
     {
@@ -64,6 +65,6 @@ export default () => render({
           }],
         },
       },
-    }
+    },
   ],
 })

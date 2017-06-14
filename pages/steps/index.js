@@ -4,22 +4,24 @@ export default () => render({
   children: [{
     type: 'Steps',
     bind: 'steps',
-    props: {
+    getInitialState: () => ({
       current: 1,
-    },
+    }),
     children: [{
       type: 'Steps.Title',
       children: [{
         type: 'span',
-        interpolation: {},
-        children: ['${title}'],
+        interpolate: ({ stateTree, statePath }) => {
+          return stateTree.get(statePath).title
+        },
       }],
     }, {
       type: 'Steps.Description',
       children: [{
         type: 'span',
-        interpolation: {},
-        children: ['${description}'],
+        interpolate: ({ stateTree, statePath }) => {
+          return stateTree.get(statePath).description
+        },
       }],
     }],
   }],
@@ -33,11 +35,10 @@ export default () => render({
       title: 'title 2',
       description: 'description 2',
       iconType: 'solution',
-    },
-      {
-        title: 'title 3',
-        description: 'description 3',
-        iconType: 'credit-card',
-      }],
+    }, {
+      title: 'title 3',
+      description: 'description 3',
+      iconType: 'credit-card',
+    }],
   },
 })

@@ -1,5 +1,6 @@
 // Stash the original PropTypes so that we can call them later:
 import OriginalPropTypes from 'prop-types'
+
 function createAnnotatedPropType(name) {
   const propType = OriginalPropTypes[name]
   // Add the metadata we want on the propType:

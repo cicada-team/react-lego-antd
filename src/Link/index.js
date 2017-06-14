@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { omit, pick } from '../util'
 
+/* eslint-disable no-script-url */
 const defaultHref = 'javascript:void(0)'
 const prefixCls = 'cicada-link'
 const DEFAULT = 'DEFAULT'
@@ -34,7 +35,7 @@ export const stateTypes = {
 }
 
 export const defaultListeners = {
-  onClick(){},
+  onClick() {},
 }
 
 export function render({ state, listeners }) {
@@ -46,3 +47,5 @@ export function render({ state, listeners }) {
   const href = state.href || defaultHref
   return <a href={href} className={prefixCls} style={style} {...omit(state, ['padding', 'color', 'text', 'href', 'lineHeight'])} {...listeners}>{state.text}</a>
 }
+
+export const display = 'inline'

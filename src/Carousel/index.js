@@ -1,4 +1,3 @@
-// TODO 不行，例子跑不起来
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Carousel } from 'antd'
@@ -25,18 +24,11 @@ export const defaultListeners = {
 }
 
 const renderCarousel = (children) => {
-  let component = null
-  if (children.length !== 0) {
-    component = children
-  } else {
-    component = <div />
-  }
-  return component
+  return children.length !== 0 ?
+    children.map((child, index) => <div key={index}>{child}</div>) :
+    (<div />)
 }
 
-/*
- render
- */
 export function render({ state, listeners, children }) {
   return (<Carousel {...state} {...listeners} >
     {renderCarousel(children)}

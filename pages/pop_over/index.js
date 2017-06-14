@@ -1,6 +1,5 @@
 import render from '../../util/render'
 
-// TODO 未通过
 export default () => render({
   children: [{
     children: [{
@@ -12,7 +11,7 @@ export default () => render({
         listeners: {
           onVisibleChange: {
             fns: [{
-              fn() { console.log(arguments) },
+              fn(...args) { console.log(args) },
             }],
           },
         },
@@ -42,8 +41,8 @@ export default () => render({
         children: [{
           type: 'MonthPicker',
           bind: 'datePicker',
-          interceptors: {
-            getCalendarContainer: ({ store, util }, ...argv) => {
+          intercepters: {
+            getCalendarContainer: () => {
               return document.querySelector('.ant-popover-inner-content')
             },
           },

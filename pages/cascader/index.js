@@ -1,4 +1,5 @@
 import render from '../../util/render'
+
 export default () => render({
   children: [{
     type: 'Cascader',
@@ -43,5 +44,5 @@ export default () => render({
 }, {
   cascader: {
     value: ['zhejiang', 'hangzhou', 'xihu'],
-  }
+  },
 })

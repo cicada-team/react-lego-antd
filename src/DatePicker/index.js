@@ -49,7 +49,7 @@ export const defaultListeners = {
 export const defaultIntercepters = {
   disabledTime: undefined,
   disabledDate: undefined,
-  getCalendarContainer: undefined
+  getCalendarContainer: undefined,
 }
 
 export function render({ state, listeners, intercepters: finalIntercepters }) {
